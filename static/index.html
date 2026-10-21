@@ -3,158 +3,155 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="ELL_AI FACE - Sistem Intelijen Biometrik Pengenalan Wajah Real-Time Berbasis DeepFace Facenet512 & RetinaFace">
-    <title>ELL_AI FACE • Quantum Biometric Intelligence</title>
+    <meta name="description" content="ELL_AI FACE - Sistem Pengenalan Wajah Ethereal Berbasis DeepFace Facenet512 & RetinaFace dengan Nuansa Biru Langit Malam Berbintang">
+    <title>ELL_AI FACE • Night Sky Edition</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=2.0">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=3.0">
 </head>
 <body>
-    <!-- Ambient Cybernetic Aura & Grid -->
-    <div class="cyber-backdrop" aria-hidden="true">
-        <div class="aurora-mesh"></div>
-        <div class="cyber-grid-overlay"></div>
-        <div class="cyber-scanlines"></div>
+    <!-- NIGHT SKY & STARS BACKDROP (Matches Reference Image) -->
+    <div class="night-sky-backdrop" aria-hidden="true">
+        <div class="night-sky-image-overlay"></div>
+        <div class="star-field"></div>
+        <div class="night-clouds-bottom">
+            <div class="cloud-layer-1"></div>
+            <div class="cloud-layer-2"></div>
+            <div class="cloud-layer-3"></div>
+        </div>
     </div>
 
     <div class="app-container">
-        <!-- COMMAND TOP BAR -->
-        <header class="command-header" id="navbar">
-            <div class="header-row">
-                <div class="brand-section">
-                    <div class="brand-iris-icon">
-                        <div class="iris-ring"></div>
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M3 7V5a2 2 0 0 1 2-2h2"/>
-                            <path d="M17 3h2a2 2 0 0 1 2 2v2"/>
-                            <path d="M21 17v2a2 2 0 0 1-2 2h-2"/>
-                            <path d="M7 21H5a2 2 0 0 1-2-2v-2"/>
-                            <circle cx="12" cy="11" r="3.2"/>
-                            <path d="M12 15c-3 0-5 1.8-5 3.5V19h10v-.5c0-1.7-2-3.5-5-3.5z"/>
+        <!-- CELESTIAL HEADER -->
+        <header class="night-header" id="navbar">
+            <div class="header-content-row">
+                <div class="brand-wrapper">
+                    <div class="brand-crescent-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/>
                         </svg>
                     </div>
-                    <div class="brand-text-col">
-                        <div class="brand-name">ELL_AI <span class="brand-name-accent">FACE</span></div>
-                        <div class="brand-tagline">
-                            <span class="system-status-dot"></span>
-                            <span>BIOMETRIC HUD • 512D VECTOR KNN • SENSOR 1080P</span>
+                    <div class="brand-text">
+                        <div class="brand-title">ELL_AI <span class="brand-title-accent">FACE</span></div>
+                        <div class="brand-subtitle">
+                            <span class="star-indicator"></span>
+                            <span>SISTEM PENGENALAN WAJAH • LANGIT MALAM BERBINTANG</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Mode Selector -->
-                <div class="mode-switch-deck" role="tablist">
-                    <button class="mode-btn active" id="btnWebcam" onclick="switchMode('webcam')" role="tab" aria-selected="true">
+                <!-- Mode Switcher -->
+                <div class="night-mode-switch" role="tablist">
+                    <button class="night-tab-btn active" id="btnWebcam" onclick="switchMode('webcam')" role="tab" aria-selected="true">
                         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M23 7l-7 5 7 5V7z"/>
                             <rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
                         </svg>
-                        <span>Live Sensor Camera</span>
+                        <span>Kamera Langsung</span>
                     </button>
-                    <button class="mode-btn" id="btnUpload" onclick="switchMode('upload')" role="tab" aria-selected="false">
+                    <button class="night-tab-btn" id="btnUpload" onclick="switchMode('upload')" role="tab" aria-selected="false">
                         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
                             <polyline points="17 8 12 3 7 8"/>
                             <line x1="12" y1="3" x2="12" y2="15"/>
                         </svg>
-                        <span>Neural Photo Scan</span>
+                        <span>Scan Foto Wajah</span>
                     </button>
                 </div>
 
-                <!-- Telemetry Pills & Server Status -->
-                <div class="telemetry-actions">
-                    <div class="hud-pill" title="Total identitas terdaftar dalam matriks vektor">
+                <!-- Header Actions & Status -->
+                <div class="header-telemetry-pills">
+                    <div class="night-pill" title="Jumlah identitas terdaftar dalam model AI">
                         <span>👥</span>
-                        <span class="hud-pill-highlight" id="statPersons">24</span>
+                        <span class="night-pill-number" id="statPersons">24</span>
                         <span>Identitas</span>
                     </div>
 
-                    <div class="hud-pill status-badge" id="navStatus" title="Status Server Backend AI (Klik untuk atur URL)" onclick="configureServerUrl()">
-                        <span class="status-beacon offline"></span>
+                    <div class="night-pill status-pill-clickable" id="navStatus" title="Status Backend Server (Klik untuk ubah URL)" onclick="configureServerUrl()">
+                        <span class="beacon-dot offline"></span>
                         <span class="status-text">Menghubungkan...</span>
                     </div>
                 </div>
             </div>
         </header>
 
-        <!-- HIGH-TECH TELEMETRY TICKER -->
-        <section class="hud-strip-ticker" aria-label="Sistem Telemetri">
-            <div class="ticker-card">
-                <div class="ticker-icon-box">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-                        <polyline points="22 4 12 14.01 9 11.01"/>
+        <!-- CELESTIAL METRIC CARDS -->
+        <section class="celestial-metric-strip" aria-label="Metrik Sistem">
+            <div class="metric-card">
+                <div class="metric-icon-box">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                     </svg>
                 </div>
-                <div class="ticker-meta">
-                    <span class="ticker-val">&gt; 95% - 99.6%</span>
-                    <span class="ticker-lbl">Akurasi Confidence</span>
+                <div class="metric-details">
+                    <span class="metric-val">&gt; 95% - 99.6%</span>
+                    <span class="metric-lbl">Akurasi Confidence Wajah</span>
                 </div>
             </div>
 
-            <div class="ticker-card">
-                <div class="ticker-icon-box">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                        <polygon points="12 2 2 7 12 12 22 7 12 2"/>
-                        <polyline points="2 17 12 22 22 17"/>
-                        <polyline points="2 12 12 17 22 12"/>
+            <div class="metric-card">
+                <div class="metric-icon-box">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/>
+                        <path d="M2 12h20"/>
                     </svg>
                 </div>
-                <div class="ticker-meta">
-                    <span class="ticker-val">512-D</span>
-                    <span class="ticker-lbl">Facenet Embedding</span>
+                <div class="metric-details">
+                    <span class="metric-val">512-D</span>
+                    <span class="metric-lbl">Facenet Embedding Vektor</span>
                 </div>
             </div>
 
-            <div class="ticker-card">
-                <div class="ticker-icon-box">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <div class="metric-card">
+                <div class="metric-icon-box">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
                         <circle cx="12" cy="12" r="10"/>
                         <polyline points="12 6 12 12 16 14"/>
                     </svg>
                 </div>
-                <div class="ticker-meta">
-                    <span class="ticker-val">&lt; 180 ms</span>
-                    <span class="ticker-lbl">Inference In-Memory</span>
+                <div class="metric-details">
+                    <span class="metric-val">&lt; 180 ms</span>
+                    <span class="metric-lbl">Kecepatan Inferensi KNN</span>
                 </div>
             </div>
 
-            <div class="ticker-card">
-                <div class="ticker-icon-box">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
-                        <line x1="8" y1="21" x2="16" y2="21"/>
-                        <line x1="12" y1="17" x2="12" y2="21"/>
+            <div class="metric-card">
+                <div class="metric-icon-box">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                        <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                        <line x1="12" y1="22.08" x2="12" y2="12"/>
                     </svg>
                 </div>
-                <div class="ticker-meta">
-                    <span class="ticker-val">RetinaFace</span>
-                    <span class="ticker-lbl">Detector Backbone</span>
+                <div class="metric-details">
+                    <span class="metric-val">RetinaFace</span>
+                    <span class="metric-lbl">Detektor Landmark Biometrik</span>
                 </div>
             </div>
         </section>
 
-        <!-- MAIN COCKPIT WORKSPACE -->
-        <main class="cockpit-grid">
-            <!-- LEFT: VIEWPORT TERMINAL -->
-            <section class="viewport-terminal">
-                <div class="terminal-header">
-                    <div class="terminal-header-left">
-                        <span class="rec-pulse-indicator"></span>
-                        <h2 class="terminal-title" id="panelTitle">Sensor Kamera Real-Time</h2>
-                        <span class="terminal-badge">OPTICAL AI 1080P</span>
+        <!-- MAIN VIEWPORT + DOSSIER GRID -->
+        <main class="main-stage-grid">
+            <!-- VIEWPORT STAGE -->
+            <section class="viewport-card">
+                <div class="viewport-header-row">
+                    <div class="viewport-title-group">
+                        <span class="star-live-beacon"></span>
+                        <h2 class="viewport-heading" id="panelTitle">Sensor Kamera Langsung</h2>
+                        <span class="viewport-tag-pill">AI HD 1080P</span>
                     </div>
 
-                    <div class="terminal-controls" id="webcamControls">
-                        <button class="cyber-btn cyber-btn-primary" id="btnStartCam" onclick="startWebcam()">
-                            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                    <div class="viewport-controls-row" id="webcamControls">
+                        <button class="btn-sky-action btn-sky-primary" id="btnStartCam" onclick="startWebcam()">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                                 <polygon points="5 3 19 12 5 21 5 3"/>
                             </svg>
-                            <span>Aktifkan Scanner</span>
+                            <span>Mulai Kamera</span>
                         </button>
-                        <button class="cyber-btn cyber-btn-danger hidden" id="btnStopCam" onclick="stopWebcam()">
-                            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                        <button class="btn-sky-action btn-sky-danger hidden" id="btnStopCam" onclick="stopWebcam()">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                                 <rect x="6" y="6" width="12" height="12" rx="2"/>
                             </svg>
                             <span>Hentikan</span>
@@ -162,250 +159,238 @@
                     </div>
                 </div>
 
-                <!-- STAGE CANVAS -->
-                <div class="viewport-stage" id="videoContainer">
-                    <!-- Futuristic Target Crosshairs -->
-                    <div class="target-reticle tl"></div>
-                    <div class="target-reticle tr"></div>
-                    <div class="target-reticle bl"></div>
-                    <div class="target-reticle br"></div>
+                <!-- Video / Upload Canvas Screen -->
+                <div class="viewport-screen-stage" id="videoContainer">
+                    <div class="moonlit-corner tl"></div>
+                    <div class="moonlit-corner tr"></div>
+                    <div class="moonlit-corner bl"></div>
+                    <div class="moonlit-corner br"></div>
 
-                    <!-- Mode 1: Webcam Feed -->
-                    <div class="webcam-feed-wrapper" id="webcamWrapper">
+                    <!-- Webcam Feed -->
+                    <div class="webcam-feed-container" id="webcamWrapper">
                         <video id="webcamVideo" autoplay playsinline muted></video>
                         <canvas id="overlayCanvas"></canvas>
-                        <div class="biometric-laser-line hidden" id="scanLine"></div>
+                        <div class="starlight-scanning-beam hidden" id="scanLine"></div>
 
-                        <!-- Standby Holographic Aperture Overlay -->
-                        <div class="standby-aperture-overlay" id="videoPlaceholder">
-                            <div class="radar-hologram-rig">
-                                <div class="radar-circle-outer"></div>
-                                <div class="radar-circle-inner"></div>
-                                <div class="radar-sweep-beam"></div>
-                                <div class="radar-center-icon">
-                                    <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                                        <circle cx="12" cy="12" r="10"/>
-                                        <line x1="14.31" y1="8" x2="20.05" y2="17.94"/>
-                                        <line x1="9.69" y1="8" x2="21.17" y2="8"/>
-                                        <line x1="7.38" y1="12" x2="13.12" y2="2.06"/>
-                                        <line x1="9.69" y1="16" x2="3.95" y2="6.06"/>
-                                        <line x1="14.31" y1="16" x2="2.83" y2="16"/>
-                                        <line x1="16.62" y1="12" x2="10.88" y2="21.94"/>
+                        <!-- Standby Crescent Moon Overlay -->
+                        <div class="standby-celestial-overlay" id="videoPlaceholder">
+                            <div class="moon-orb-container">
+                                <div class="moon-halo-ring"></div>
+                                <div class="moon-inner-glow"></div>
+                                <div class="moon-icon-center">
+                                    <svg width="50" height="50" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/>
                                     </svg>
                                 </div>
                             </div>
-                            <h3 class="standby-title">Sensor Biometrik Standby</h3>
-                            <p class="standby-desc">
-                                Tekan tombol <strong>"Aktifkan Scanner"</strong> di atas untuk memulai pelacakan wajah live & verifikasi identitas seketika.
+                            <h3 class="standby-title-text">Sensor Langit Malam Siap Digunakan</h3>
+                            <p class="standby-desc-text">
+                                Klik tombol <strong>"Mulai Kamera"</strong> di atas untuk memindai wajah Anda dan melakukan pencocokan biometrik secara langsung.
                             </p>
-                            <button class="cyber-btn cyber-btn-primary" onclick="startWebcam()">
+                            <button class="btn-sky-action btn-sky-primary" onclick="startWebcam()">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                                     <polygon points="5 3 19 12 5 21 5 3"/>
                                 </svg>
-                                <span>Mulai Sensor Sekarang</span>
+                                <span>Aktifkan Sensor Kamera</span>
                             </button>
                         </div>
                     </div>
 
-                    <!-- Mode 2: Upload Feed -->
-                    <div class="upload-feed-wrapper hidden" id="uploadWrapper">
-                        <div class="upload-dropzone-box" id="uploadZone" onclick="document.getElementById('fileInput').click()">
+                    <!-- Upload Feed -->
+                    <div class="upload-feed-container hidden" id="uploadWrapper">
+                        <div class="night-dropzone-box" id="uploadZone" onclick="document.getElementById('fileInput').click()">
                             <input type="file" id="fileInput" accept="image/*" onchange="handleFileUpload(event)" hidden>
-                            <div class="upload-icon-circle">
+                            <div class="dropzone-moon-circle">
                                 <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
                                     <polyline points="17 8 12 3 7 8"/>
                                     <line x1="12" y1="3" x2="12" y2="15"/>
                                 </svg>
                             </div>
-                            <h3 class="upload-title">Unggah Foto Biometrik</h3>
-                            <p class="upload-sub">Tarik & letakkan foto di sini atau klik untuk menelusuri komputer</p>
-                            <span class="upload-pill-tag">JPG, PNG, WEBP &bull; Resolusi Tinggi Direkomendasikan</span>
+                            <h3 class="dropzone-heading">Unggah Foto Wajah</h3>
+                            <p class="dropzone-caption">Tarik dan letakkan foto ke sini, atau klik untuk memilih file</p>
+                            <span class="dropzone-format-badge">Mendukung JPG, PNG, WEBP</span>
                         </div>
 
-                        <div class="uploaded-preview-box hidden" id="uploadedPreview">
-                            <img id="uploadedImage" src="" alt="Uploaded Face Target">
+                        <div class="uploaded-preview-container hidden" id="uploadedPreview">
+                            <img id="uploadedImage" src="" alt="Target Wajah">
                             <canvas id="uploadOverlayCanvas"></canvas>
-                            <button class="btn-close-preview" onclick="removeUpload()" title="Hapus Gambar">&times;</button>
+                            <button class="btn-remove-photo" onclick="removeUpload()" title="Hapus Foto">&times;</button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Viewport Bottom HUD -->
-                <div class="terminal-footer-hud">
-                    <div class="hud-stat-item">
-                        <span class="hud-dot-active"></span>
-                        <span>DETEKSI LANDMARK:</span>
+                <!-- Viewport Footer Telemetry -->
+                <div class="viewport-footer-telemetry">
+                    <div class="footer-item">
+                        <span>DETEKTOR LANDMARK:</span>
                         <strong>RetinaFace 5-Point</strong>
                     </div>
-                    <div class="hud-stat-item">
-                        <span>MODEL INFERENCE:</span>
+                    <div class="footer-item">
+                        <span>MODEL UTAMA:</span>
                         <strong id="modelEngine">Facenet512</strong>
                     </div>
-                    <div class="hud-stat-item">
-                        <span>DISTANCE METRIC:</span>
-                        <strong>Cosine KNN Top-3</strong>
+                    <div class="footer-item">
+                        <span>METODE PENCOCOKAN:</span>
+                        <strong>Cosine Distance KNN Top-3</strong>
                     </div>
-                    <div class="hud-stat-item">
-                        <span>AMBANG BATAS (THRESHOLD):</span>
+                    <div class="footer-item">
+                        <span>AMBANG BATAS:</span>
                         <strong id="thresholdVal">0.4200</strong>
                     </div>
                 </div>
             </section>
 
-            <!-- RIGHT: INTELLIGENCE DOSSIER DECK -->
-            <aside class="inspector-deck">
-                <div class="inspector-card">
-                    <div class="inspector-header">
-                        <div class="inspector-title-group">
-                            <div class="inspector-icon">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                                    <circle cx="12" cy="7" r="4"/>
+            <!-- RIGHT DOSSIER COLUMN -->
+            <aside class="dossier-column">
+                <div class="dossier-card">
+                    <div class="dossier-header-row">
+                        <div class="dossier-header-title-box">
+                            <div class="dossier-star-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                                 </svg>
                             </div>
                             <div>
-                                <h3 class="inspector-title">Dossier Pengenalan</h3>
-                                <span class="inspector-subtitle">LIVE BIOMETRIC TELEMETRY</span>
+                                <h3 class="dossier-title">Hasil Pengenalan Wajah</h3>
+                                <span class="dossier-sub">VERIFIKASI BIOMETRIK REAL-TIME</span>
                             </div>
                         </div>
-                        <span class="count-badge" id="faceCount">0 wajah</span>
+                        <span class="face-count-pill" id="faceCount">0 wajah</span>
                     </div>
 
-                    <!-- Processing Strip -->
-                    <div class="processing-strip hidden" id="processingIndicator">
-                        <div class="processing-spinner"></div>
+                    <!-- Processing Indicator -->
+                    <div class="celestial-processing-strip hidden" id="processingIndicator">
+                        <div class="star-spinner"></div>
                         <span>Mengekstrak embedding 512D & mencocokkan...</span>
                     </div>
 
                     <!-- Results List -->
                     <div class="dossier-results-box" id="resultsList">
                         <div class="empty-dossier" id="emptyState">
-                            <div class="empty-reticle-icon">
-                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                                    <circle cx="12" cy="12" r="10"/>
-                                    <path d="M8 15s1.5 2 4 2 4-2 4-2"/>
-                                    <line x1="9" y1="9" x2="9.01" y2="9"/>
-                                    <line x1="15" y1="9" x2="15.01" y2="9"/>
+                            <div class="empty-star-icon">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                                    <path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/>
                                 </svg>
                             </div>
                             <h4>Menunggu Deteksi Wajah</h4>
-                            <p>Arahkan kamera ke wajah atau upload foto untuk melihat hasil pencocokan identitas secara instan.</p>
+                            <p>Arahkan kamera ke wajah atau upload foto untuk melihat hasil identifikasi biometrik secara langsung.</p>
                         </div>
                     </div>
 
                     <!-- Telemetry Dock -->
-                    <div class="telemetry-dock-grid" id="perfStats">
-                        <div class="tele-metric">
-                            <span class="tele-lbl">LATENSI</span>
-                            <span class="tele-val" id="perfTime">- ms</span>
+                    <div class="dossier-telemetry-dock" id="perfStats">
+                        <div class="tele-item">
+                            <span class="tele-title">LATENSI</span>
+                            <span class="tele-value" id="perfTime">- ms</span>
                         </div>
-                        <div class="tele-metric">
-                            <span class="tele-lbl">DETEKTOR</span>
-                            <span class="tele-val" id="detectorEngine">RetinaFace</span>
+                        <div class="tele-item">
+                            <span class="tele-title">DETEKTOR</span>
+                            <span class="tele-value" id="detectorEngine">RetinaFace</span>
                         </div>
-                        <div class="tele-metric">
-                            <span class="tele-lbl">CONFIDENCE</span>
-                            <span class="tele-val">&gt; 91% (Match)</span>
+                        <div class="tele-item">
+                            <span class="tele-title">CONFIDENCE</span>
+                            <span class="tele-value">&gt; 91% (Valid)</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- SPEC CHIPSET CARD -->
-                <div class="engine-spec-card">
-                    <div class="spec-title-row">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--cyan-core)" stroke-width="2.2">
-                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                <!-- Spec Architecture Card -->
+                <div class="night-spec-card">
+                    <div class="spec-heading-row">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--sky-blue-accent)" stroke-width="2.2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polygon points="12 6 15 11 20 12 16 16 17 21 12 18 7 21 8 16 4 12 9 11 12 6"/>
                         </svg>
-                        <span>SPESIFIKASI ARSITEKTUR AI</span>
+                        <span>ARSITEKTUR MODEL BIOMETRIK</span>
                     </div>
-                    <div class="spec-grid">
-                        <div class="spec-pill">
-                            <span class="spec-key">NEURAL CORE</span>
-                            <span class="spec-val">Facenet-512</span>
+                    <div class="spec-grid-layout">
+                        <div class="spec-item-box">
+                            <span class="spec-label">MODEL EMBEDDING</span>
+                            <span class="spec-data">DeepFace Facenet512</span>
                         </div>
-                        <div class="spec-pill">
-                            <span class="spec-key">DETEKTOR</span>
-                            <span class="spec-val">RetinaFace High-Recall</span>
+                        <div class="spec-item-box">
+                            <span class="spec-label">MODEL DETEKSI</span>
+                            <span class="spec-data">RetinaFace Precision</span>
                         </div>
-                        <div class="spec-pill">
-                            <span class="spec-key">KNN TOP-3</span>
-                            <span class="spec-val">Normalized Cosine</span>
+                        <div class="spec-item-box">
+                            <span class="spec-label">JARAK NORMALISASI</span>
+                            <span class="spec-data">Cosine KNN Top-3</span>
                         </div>
-                        <div class="spec-pill">
-                            <span class="spec-key">VERSI UI/UX</span>
-                            <span class="spec-val">ELL_AI Cyber v3.8</span>
+                        <div class="spec-item-box">
+                            <span class="spec-label">EDISI DESAIN</span>
+                            <span class="spec-data">Biru Langit Malam</span>
                         </div>
                     </div>
                 </div>
             </aside>
         </main>
 
-        <!-- 24 IDENTITAS VAULT SECTION -->
-        <section class="vault-section">
-            <div class="vault-header-row">
-                <div class="vault-title-group">
-                    <div class="vault-icon-badge">📁</div>
+        <!-- 24 IDENTITY VAULT SECTION -->
+        <section class="night-vault-section">
+            <div class="vault-top-row">
+                <div class="vault-title-pack">
+                    <div class="vault-moon-badge">🌙</div>
                     <div>
-                        <h3 class="vault-heading">Matriks Database Profil Identitas</h3>
-                        <p class="vault-subheading">24 Orang Terdaftar • 1.220 Vektor Embedding Aktif dalam Memori Model</p>
+                        <h3 class="vault-headline">Daftar Profil Identitas Terdaftar</h3>
+                        <p class="vault-subheadline">24 Orang Terdaftar • 1.220 Vektor Embedding Aktif dalam Dataset</p>
                     </div>
                 </div>
 
-                <div class="vault-search-box">
-                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <div class="vault-search-wrapper">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <circle cx="11" cy="11" r="8"/>
                         <line x1="21" y1="21" x2="16.65" y2="16.65"/>
                     </svg>
-                    <input type="text" id="vaultSearchInput" placeholder="Filter identitas terdaftar..." oninput="filterPersons(this.value)">
+                    <input type="text" id="vaultSearchInput" placeholder="Cari nama profil identitas..." oninput="filterPersons(this.value)">
                 </div>
             </div>
 
-            <!-- Vault Cards Roster Grid -->
-            <div class="vault-roster-grid" id="personsList">
+            <!-- Vault Cards Grid -->
+            <div class="vault-cards-grid" id="personsList">
                 <div class="empty-dossier">Memuat database identitas biometrik...</div>
             </div>
         </section>
 
-        <!-- WORKFLOW GUIDE -->
-        <section class="workflow-deck">
-            <div class="wf-step-card">
-                <div class="wf-num-badge">01</div>
-                <div class="wf-content">
-                    <strong>Sensor Ingest & Alignment</strong>
-                    <span>Kamera mengambil frame video 1080p, mendeteksi bounding box dan 5 titik landmark mata, hidung, serta mulut secara real-time.</span>
+        <!-- 3-STEP WORKFLOW GUIDE -->
+        <section class="guide-deck-row">
+            <div class="guide-step-card">
+                <div class="step-moon-badge">01</div>
+                <div class="step-details">
+                    <strong>Tangkapan Kamera / Citra</strong>
+                    <span>Sensor video menangkap wajah secara real-time, mendeteksi orientasi kepala dan 5 titik landmark mata, hidung, serta mulut.</span>
                 </div>
             </div>
 
-            <div class="wf-step-card">
-                <div class="wf-num-badge">02</div>
-                <div class="wf-content">
-                    <strong>512D Vector Embedding</strong>
-                    <span>DeepFace Facenet512 mentransformasikan citra wajah ke ruang dimensi 512D hypersphere berbobot normalisasi.</span>
+            <div class="guide-step-card">
+                <div class="step-moon-badge">02</div>
+                <div class="step-details">
+                    <strong>Ekstraksi 512D Facenet</strong>
+                    <span>Model DeepFace Facenet512 mengubah fitur unik wajah ke dalam 512 dimensi vektor berbobot normalisasi Euclidean.</span>
                 </div>
             </div>
 
-            <div class="wf-step-card">
-                <div class="wf-num-badge">03</div>
-                <div class="wf-content">
-                    <strong>Vectorized KNN Top-3 Matching</strong>
-                    <span>Dot product matriks menghitung cosine distance ke seluruh 1.220 embedding sekaligus dengan ambang batas presisi ≤ 0.4200.</span>
+            <div class="guide-step-card">
+                <div class="step-moon-badge">03</div>
+                <div class="step-details">
+                    <strong>Pencocokan Cosine KNN Top-3</strong>
+                    <span>Matriks dot-product membandingkan wajah seketika ke seluruh 1.220 embedding terdaftar dengan ambang batas Cosine ≤ 0.4200.</span>
                 </div>
             </div>
         </section>
 
         <!-- FOOTER -->
-        <footer class="cockpit-footer">
-            <div class="footer-brand-tag">ELL_AI FACE &bull; Quantum Biometric Intelligence System</div>
-            <div class="footer-tags">
-                <span class="footer-chip">Facenet 512D</span>
-                <span class="footer-chip">RetinaFace</span>
-                <span class="footer-chip">Cloudflare Tunnel Ready</span>
-                <span class="footer-chip">Vercel & Python WSGI</span>
+        <footer class="night-footer">
+            <div class="footer-brand">ELL_AI FACE &bull; Night Sky Edition &copy; 2026</div>
+            <div class="footer-chips">
+                <span class="footer-chip-item">Facenet 512D</span>
+                <span class="footer-chip-item">RetinaFace</span>
+                <span class="footer-chip-item">Biru Langit Malam</span>
+                <span class="footer-chip-item">Cloudflare Tunnel Ready</span>
             </div>
         </footer>
     </div>
 
-    <script src="app.js?v=2.0"></script>
+    <script src="app.js?v=3.0"></script>
 </body>
 </html>

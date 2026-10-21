@@ -1,7 +1,7 @@
 /**
  * =====================================================================
- *  ELL_AI FACE • Quantum Cyber-Biometric Frontend
- *  Palette: Cyber Cyan (#00f5ff), Electric Azure (#0077ff), Navy Slate
+ *  ELL_AI FACE • Night Sky Edition ("Biru Langit Malam")
+ *  Palette: Midnight Navy (#04091a - #0f2766), Celestial Azure (#38bdf8)
  * =====================================================================
  */
 
@@ -32,7 +32,7 @@ const JPEG_QUALITY = 0.88;
 function configureServerUrl() {
     const current = localStorage.getItem('faceid_backend_url') || API_BASE;
     const input = prompt(
-        "Pengaturan URL Backend Server ELL_AI FACE:\n" +
+        "Pengaturan URL Backend ELL_AI FACE (Night Sky Edition):\n" +
         "• Lokal: http://localhost:5000\n" +
         "• Cloudflare: https://xxxx.trycloudflare.com\n\n" +
         "URL saat ini:",
@@ -94,13 +94,13 @@ document.addEventListener('DOMContentLoaded', () => {
     checkServerHealth();
     loadPersons();
     setupEventListeners();
-    initCyberGlow();
+    initNightSkyStars();
     setInterval(checkServerHealth, 8000);
 });
 
-function initCyberGlow() {
+function initNightSkyStars() {
     const canvas = document.createElement('canvas');
-    canvas.className = 'cyber-ambient-canvas';
+    canvas.className = 'night-sky-star-canvas';
     canvas.style.position = 'fixed';
     canvas.style.top = '0';
     canvas.style.left = '0';
@@ -108,7 +108,7 @@ function initCyberGlow() {
     canvas.style.height = '100vh';
     canvas.style.pointerEvents = 'none';
     canvas.style.zIndex = '0';
-    canvas.style.opacity = '0.4';
+    canvas.style.opacity = '0.92';
     document.body.insertBefore(canvas, document.body.firstChild);
 
     const ctx = canvas.getContext('2d');
@@ -120,33 +120,30 @@ function initCyberGlow() {
         height = canvas.height = window.innerHeight;
     });
 
-    const particles = Array.from({ length: 32 }, () => ({
+    const stars = Array.from({ length: 85 }, () => ({
         x: Math.random() * width,
-        y: Math.random() * height,
-        r: Math.random() * 70 + 20,
-        dx: (Math.random() - 0.5) * 0.45,
-        dy: (Math.random() - 0.5) * 0.35,
-        alpha: Math.random() * 0.14 + 0.04
+        y: Math.random() * height * 0.75,
+        r: Math.random() * 1.5 + 0.6,
+        alpha: Math.random() * 0.7 + 0.3,
+        twinkleSpeed: Math.random() * 0.02 + 0.008,
+        color: Math.random() > 0.8 ? '#fef08a' : (Math.random() > 0.45 ? '#93c5fd' : '#ffffff')
     }));
 
     function animate() {
         ctx.clearRect(0, 0, width, height);
-        particles.forEach(p => {
-            p.x += p.dx;
-            p.y += p.dy;
-            if (p.x < -100) p.x = width + 100;
-            if (p.x > width + 100) p.x = -100;
-            if (p.y < -100) p.y = height + 100;
-            if (p.y > height + 100) p.y = -100;
+        stars.forEach(s => {
+            s.alpha += s.twinkleSpeed;
+            if (s.alpha > 1 || s.alpha < 0.25) s.twinkleSpeed = -s.twinkleSpeed;
 
-            const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r);
-            grad.addColorStop(0, `rgba(0, 245, 255, ${p.alpha})`);
-            grad.addColorStop(0.6, `rgba(0, 119, 255, ${p.alpha * 0.5})`);
-            grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
-            ctx.fillStyle = grad;
+            ctx.save();
+            ctx.globalAlpha = Math.max(0.1, Math.min(1, s.alpha));
+            ctx.fillStyle = s.color;
+            ctx.shadowColor = s.color;
+            ctx.shadowBlur = s.r * 3;
             ctx.beginPath();
-            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
             ctx.fill();
+            ctx.restore();
         });
         requestAnimationFrame(animate);
     }
@@ -211,10 +208,10 @@ async function checkServerHealth() {
 
 function updateServerStatus(online, text) {
     if (!elements.navStatus) return;
-    const dot = elements.navStatus.querySelector('.status-beacon') || elements.navStatus.querySelector('.status-dot');
+    const dot = elements.navStatus.querySelector('.beacon-dot') || elements.navStatus.querySelector('.status-dot');
     const label = elements.navStatus.querySelector('.status-text');
     if (dot) {
-        dot.className = `status-beacon ${online ? 'online' : 'offline'}`;
+        dot.className = `beacon-dot ${online ? 'online' : 'offline'}`;
     }
     if (label) label.textContent = text;
 }
@@ -245,7 +242,7 @@ function renderPersonsList(persons) {
             <div class="roster-avatar">${getInitials(p.name)}</div>
             <div class="roster-info">
                 <span class="roster-name">${escapeHtml(p.name)}</span>
-                <span class="roster-sub">${p.photos || p.samples || 50} Vektor Biometrik</span>
+                <span class="roster-sub">${p.photos || p.samples || 50} Sampel Wajah</span>
             </div>
         </div>
     `).join('');
@@ -266,7 +263,7 @@ function switchMode(mode) {
         elements.btnUpload.classList.remove('active');
         elements.webcamWrapper.classList.remove('hidden');
         elements.uploadWrapper.classList.add('hidden');
-        elements.panelTitle.textContent = 'Sensor Kamera Real-Time';
+        elements.panelTitle.textContent = 'Sensor Kamera Langsung';
         elements.webcamControls.classList.remove('hidden');
         removeUpload();
     } else {
@@ -274,7 +271,7 @@ function switchMode(mode) {
         elements.btnWebcam.classList.remove('active');
         elements.uploadWrapper.classList.remove('hidden');
         elements.webcamWrapper.classList.add('hidden');
-        elements.panelTitle.textContent = 'Neural Photo Ingest';
+        elements.panelTitle.textContent = 'Scan Foto Wajah';
         elements.webcamControls.classList.add('hidden');
         stopWebcam();
     }
@@ -306,7 +303,7 @@ async function startWebcam() {
             startCaptureLoop();
         };
     } catch (err) {
-        alert('Gagal mengakses sensor kamera: ' + err.message);
+        alert('Gagal mengakses kamera: ' + err.message);
     }
 }
 
@@ -429,7 +426,7 @@ async function sendForRecognition(imageData, source) {
     }
 }
 
-// Bounding box: Cyber Cyan & Electric Azure HUD Reticle
+// Bounding box: Starlight Celestial Azure (#38bdf8) & Rose (#fb7185)
 function drawBoundingBoxes(canvas, faces, isMirrored) {
     const ctx = canvas.getContext('2d');
     const w = canvas.width;
@@ -443,14 +440,14 @@ function drawBoundingBoxes(canvas, faces, isMirrored) {
         }
 
         const isRecognized = face.name !== 'Unknown';
-        const color = isRecognized ? '#00f5ff' : '#f43f5e';
-        const glowColor = isRecognized ? 'rgba(0, 245, 255, 0.7)' : 'rgba(244, 63, 94, 0.6)';
+        const color = isRecognized ? '#38bdf8' : '#fb7185';
+        const glowColor = isRecognized ? 'rgba(56, 189, 248, 0.65)' : 'rgba(251, 113, 133, 0.55)';
 
         ctx.shadowColor = glowColor;
-        ctx.shadowBlur = 16;
+        ctx.shadowBlur = 14;
         ctx.strokeStyle = color;
-        ctx.lineWidth = 3;
-        const cornerLen = Math.min(bw, bh) * 0.25;
+        ctx.lineWidth = 2.5;
+        const cornerLen = Math.min(bw, bh) * 0.22;
 
         // Top-left
         ctx.beginPath();
@@ -480,28 +477,32 @@ function drawBoundingBoxes(canvas, faces, isMirrored) {
         ctx.lineTo(x + bw, y + bh - cornerLen);
         ctx.stroke();
 
-        // Thin perimeter frame
+        // Perimeter line
         ctx.shadowBlur = 0;
-        ctx.strokeStyle = isRecognized ? 'rgba(0, 245, 255, 0.28)' : 'rgba(244, 63, 94, 0.28)';
+        ctx.strokeStyle = isRecognized ? 'rgba(56, 189, 248, 0.25)' : 'rgba(251, 113, 133, 0.25)';
         ctx.lineWidth = 1;
         ctx.strokeRect(x, y, bw, bh);
 
-        // Cyber Tag
+        // Starlight Tag
         const label = isRecognized 
-            ? `${face.name} • ${face.confidence}%` 
-            : 'TARGET TIDAK DIKENAL';
+            ? `✨ ${face.name} • ${face.confidence}%` 
+            : 'Belum Terdaftar';
         
-        ctx.font = `700 ${Math.max(13, bw * 0.058)}px "Space Grotesk", sans-serif`;
+        ctx.font = `600 ${Math.max(13, bw * 0.058)}px "Plus Jakarta Sans", sans-serif`;
         const textMetrics = ctx.measureText(label);
         const textW = textMetrics.width + 20;
         const textH = Math.max(26, bw * 0.08);
         const labelY = y - textH - 8;
 
-        ctx.fillStyle = isRecognized ? 'rgba(0, 245, 255, 0.95)' : 'rgba(244, 63, 94, 0.95)';
+        ctx.fillStyle = isRecognized ? 'rgba(7, 24, 66, 0.94)' : 'rgba(64, 12, 28, 0.94)';
         roundRect(ctx, x, labelY, textW, textH, 6);
         ctx.fill();
 
-        ctx.fillStyle = isRecognized ? '#040814' : '#ffffff';
+        ctx.strokeStyle = isRecognized ? 'rgba(56, 189, 248, 0.6)' : 'rgba(251, 113, 133, 0.6)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        ctx.fillStyle = isRecognized ? '#f0f9ff' : '#fecdd3';
         ctx.textBaseline = 'middle';
         ctx.fillText(label, x + 10, labelY + textH / 2);
     });
@@ -529,8 +530,8 @@ function displayResults(faces, processingTime) {
     if (faces.length === 0) {
         elements.resultsList.innerHTML = `
             <div class="empty-dossier">
-                <div class="empty-reticle-icon">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                <div class="empty-star-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
                         <circle cx="12" cy="12" r="10"/>
                         <line x1="12" y1="8" x2="12" y2="12"/>
                         <line x1="12" y1="16" x2="12.01" y2="16"/>
@@ -582,16 +583,13 @@ function clearResults() {
     if (elements.resultsList) {
         elements.resultsList.innerHTML = `
             <div class="empty-dossier" id="emptyState">
-                <div class="empty-reticle-icon">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                        <circle cx="12" cy="12" r="10"/>
-                        <path d="M8 15s1.5 2 4 2 4-2 4-2"/>
-                        <line x1="9" y1="9" x2="9.01" y2="9"/>
-                        <line x1="15" y1="9" x2="15.01" y2="9"/>
+                <div class="empty-star-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                        <path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/>
                     </svg>
                 </div>
                 <h4>Menunggu Deteksi Wajah</h4>
-                <p>Nyalakan kamera atau upload foto untuk verifikasi biometrik ELL_AI FACE.</p>
+                <p>Nyalakan kamera atau upload foto untuk melihat hasil pencocokan biometrik ELL_AI FACE.</p>
             </div>
         `;
     }
