@@ -5,7 +5,7 @@
  * =====================================================================
  */
 
-const CLOUD_BACKEND_URL = 'https://change-mariah-opponents-meter.trycloudflare.com';
+const CLOUD_BACKEND_URL = 'https://actively-gem-loving-beneficial.trycloudflare.com';
 
 const isFileProtocol = window.location.protocol === 'file:';
 const isLocal = Boolean(
