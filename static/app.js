@@ -5,7 +5,7 @@
  * =====================================================================
  */
 
-const CLOUD_BACKEND_URL = 'https://actively-gem-loving-beneficial.trycloudflare.com';
+const CLOUD_BACKEND_URL = 'https://physician-hopefully-academic-asian.trycloudflare.com';
 
 const isFileProtocol = window.location.protocol === 'file:';
 const isLocal = Boolean(
