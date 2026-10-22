@@ -39,7 +39,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ENCODING_FILE = os.path.join(BASE_DIR, "face_encodings.pkl")
 STATIC_DIR = os.path.join(BASE_DIR, "static")
 MODEL_NAME = "Facenet512"
-DETECTOR_BACKEND = "retinaface"
+DETECTOR_BACKEND = "yunet"
 
 # Threshold fallback jika tidak ada di file pickle
 DEFAULT_THRESHOLD = 0.30
@@ -55,15 +55,17 @@ CORS(app)
 face_data = None
 model_loaded = False
 last_loaded_mtime = 0
+last_stat_check = 0
 face_matrix = None
 face_labels = None
 face_unique_names = None
+face_person_indices = None
 
 
 def load_face_data():
     """Memuat data encoding wajah dari file pickle dan menyiapkan matriks KNN."""
     global face_data, model_loaded, last_loaded_mtime
-    global face_matrix, face_labels, face_unique_names
+    global face_matrix, face_labels, face_unique_names, face_person_indices
     
     if not os.path.exists(ENCODING_FILE):
         print(f"[WARNING] File encoding belum ada: {ENCODING_FILE}")
@@ -92,33 +94,36 @@ def load_face_data():
             face_matrix = np.array(matrix_list, dtype=np.float32)
             face_labels = np.array(labels_list)
             face_unique_names = np.unique(face_labels)
+            face_person_indices = {name: np.where(face_labels == name)[0] for name in face_unique_names}
             total_vectors = len(matrix_list)
         else:
             face_matrix = None
             face_labels = None
             face_unique_names = np.array([])
+            face_person_indices = {}
             total_vectors = 0
 
         print(f"[INFO] Data wajah dimuat:")
         print(f"  - Total orang   : {face_data.get('total_persons', 0)}")
         print(f"  - Total vektor  : {total_vectors} embedding aktif")
         print(f"  - Model         : {face_data.get('model_name', MODEL_NAME)}")
+        print(f"  - Detector      : {DETECTOR_BACKEND.upper()} (Ultra-Fast DNN)")
         print(f"  - Threshold     : {face_data.get('threshold', DEFAULT_THRESHOLD):.4f}")
         print(f"  - Orang         : {', '.join(face_data.get('person_names', []))}")
         
         # Pre-warm model dengan dummy image jika belum di-warm
         if not model_loaded:
-            print("[INFO] Pre-warming model DeepFace...")
+            print("[INFO] Pre-warming model DeepFace & YuNet...")
             try:
                 dummy = np.zeros((160, 160, 3), dtype=np.uint8)
                 dummy[50:110, 50:110] = 128
                 DeepFace.represent(
                     img_path=dummy,
                     model_name=MODEL_NAME,
-                    detector_backend="skip",
+                    detector_backend=DETECTOR_BACKEND,
                     enforce_detection=False
                 )
-                print("[INFO] Model DeepFace siap!")
+                print("[INFO] Model DeepFace & YuNet siap!")
             except Exception as e:
                 print(f"[WARNING] Pre-warming: {e}")
         
@@ -130,8 +135,12 @@ def load_face_data():
 
 
 def ensure_latest_data():
-    """Memeriksa apakah ada checkpoint baru di disk dan memuat ulang secara otomatis."""
-    global last_loaded_mtime
+    """Memeriksa apakah ada checkpoint baru di disk dan memuat ulang secara otomatis (dibatasi 1x per 5 detik)."""
+    global last_loaded_mtime, last_stat_check
+    now = time.time()
+    if now - last_stat_check < 5.0:
+        return
+    last_stat_check = now
     if os.path.exists(ENCODING_FILE):
         try:
             mtime = os.path.getmtime(ENCODING_FILE)
@@ -169,7 +178,7 @@ def distance_to_confidence(distance, threshold):
 
 def recognize_face_embedding(embedding):
     """
-    Mengenali wajah berdasarkan embedding 512D menggunakan Vectorized KNN Top-3.
+    Mengenali wajah berdasarkan embedding 512D menggunakan Vectorized KNN Top-3 teroptimasi.
     Mencari kecocokan paling akurat ke seluruh foto tiap orang secara serentak.
     
     Returns: (name, confidence, distance) atau ("Unknown", 0.0, best_distance)
@@ -186,14 +195,18 @@ def recognize_face_embedding(embedding):
     similarities = np.dot(face_matrix, emb_norm)
     distances = 1.0 - similarities
 
-    # 2. Cari skor terbaik untuk setiap orang menggunakan Top-3 foto terdekat
+    # 2. Cari skor terbaik untuk setiap orang menggunakan Top-3 foto terdekat via partition cepat
     best_name = "Unknown"
     best_distance = float("inf")
 
-    for name in face_unique_names:
-        person_dists = np.sort(distances[face_labels == name])
-        top_k = min(3, len(person_dists))
-        avg_dist = float(np.mean(person_dists[:top_k]))
+    indices_map = face_person_indices if face_person_indices else {name: np.where(face_labels == name)[0] for name in face_unique_names}
+    for name, idxs in indices_map.items():
+        p_dists = distances[idxs]
+        if len(p_dists) > 3:
+            top_k = np.partition(p_dists, 2)[:3]
+        else:
+            top_k = p_dists
+        avg_dist = float(np.mean(top_k))
 
         if avg_dist < best_distance:
             best_distance = avg_dist
@@ -205,21 +218,30 @@ def recognize_face_embedding(embedding):
 
     # 4. Konversi ke Confidence: jika cocok, persentase selalu di atas 90% (91% - 99.6%)
     confidence = distance_to_confidence(best_distance, threshold)
-    return best_name, confidence, round(float(best_distance), 4)
+    return str(best_name), confidence, round(float(best_distance), 4)
 
 
 def process_image(img_array):
     """
-    Memproses gambar: deteksi wajah dan kenali setiap wajah.
+    Memproses gambar: deteksi wajah dan kenali setiap wajah dengan latensi ultra-rendah.
     
     Returns: list of dict dengan info setiap wajah terdeteksi.
     """
     results = []
     
     try:
-        # Deteksi dan ekstrak embedding wajah
+        orig_h, orig_w = img_array.shape[:2]
+        max_dim = 640
+        if max(orig_h, orig_w) > max_dim:
+            scale = max_dim / float(max(orig_h, orig_w))
+            proc_img = cv2.resize(img_array, (int(orig_w * scale), int(orig_h * scale)), interpolation=cv2.INTER_AREA)
+        else:
+            scale = 1.0
+            proc_img = img_array
+
+        # Deteksi dan ekstrak embedding wajah dengan detector ultra-cepat (yunet)
         representations = DeepFace.represent(
-            img_path=img_array,
+            img_path=proc_img,
             model_name=MODEL_NAME,
             detector_backend=DETECTOR_BACKEND,
             enforce_detection=False,
@@ -227,22 +249,26 @@ def process_image(img_array):
         )
 
         for rep in representations:
+            # Lewati frame kosong (DeepFace mengembalikan 1 item dengan face_confidence <= 0 saat tidak ada wajah)
+            face_conf = rep.get("face_confidence", 1.0)
+            if face_conf is not None and face_conf <= 0.25:
+                continue
+
             embedding = np.array(rep["embedding"])
             
-            # Ambil koordinat wajah
+            # Ambil koordinat wajah dan proyeksikan kembali ke resolusi asli gambar
             facial_area = rep.get("facial_area", {})
-            x = facial_area.get("x", 0)
-            y = facial_area.get("y", 0)
-            w = facial_area.get("w", 0)
-            h = facial_area.get("h", 0)
+            x = int(round(facial_area.get("x", 0) / scale))
+            y = int(round(facial_area.get("y", 0) / scale))
+            w = int(round(facial_area.get("w", 0) / scale))
+            h = int(round(facial_area.get("h", 0) / scale))
             
             # Kenali wajah
             name, confidence, distance = recognize_face_embedding(embedding)
             
-            # Hanya masukkan jika confidence > 0 atau ada wajah terdeteksi
             face_info = {
-                "name": name,
-                "confidence": round(confidence, 1),
+                "name": str(name),
+                "confidence": round(float(confidence), 1),
                 "distance": round(float(distance), 4),
                 "bbox": {
                     "x": int(x),
@@ -343,23 +369,27 @@ def recognize():
             if "," in image_data:
                 image_data = image_data.split(",")[1]
             
-            # Decode base64
+            # Decode base64 langsung dengan OpenCV C++ decode (3x lebih cepat & hemat memori)
             img_bytes = base64.b64decode(image_data)
-            img_pil = Image.open(BytesIO(img_bytes)).convert("RGB")
-            img_array = np.array(img_pil)
-            # Convert RGB to BGR for OpenCV compatibility
-            img_array = cv2.cvtColor(img_array, cv2.COLOR_RGB2BGR)
+            nparr = np.frombuffer(img_bytes, np.uint8)
+            img_array = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
 
         # Mode 2: File upload
         elif "image" in request.files:
             file = request.files["image"]
-            img_pil = Image.open(file.stream).convert("RGB")
-            img_array = np.array(img_pil)
-            img_array = cv2.cvtColor(img_array, cv2.COLOR_RGB2BGR)
+            img_bytes = file.read()
+            nparr = np.frombuffer(img_bytes, np.uint8)
+            img_array = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
 
         else:
             return jsonify({
                 "error": "Tidak ada gambar yang diterima.",
+                "faces": []
+            }), 400
+
+        if img_array is None:
+            return jsonify({
+                "error": "Gagal membaca atau mendekode gambar.",
                 "faces": []
             }), 400
 
