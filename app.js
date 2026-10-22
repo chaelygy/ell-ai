@@ -5,7 +5,7 @@
  * =====================================================================
  */
 
-const CLOUD_BACKEND_URL = 'https://partnership-being-estimate-diamonds.trycloudflare.com';
+const CLOUD_BACKEND_URL = 'https://duo-word-disclosure-clearance.trycloudflare.com';
 
 const isFileProtocol = window.location.protocol === 'file:';
 const isLocal = Boolean(
