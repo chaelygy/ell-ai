@@ -5,7 +5,7 @@
  * =====================================================================
  */
 
-const CLOUD_BACKEND_URL = 'https://api.trycloudflare.com';
+const CLOUD_BACKEND_URL = 'https://distribution-stakeholders-individual-univ.trycloudflare.com';
 
 const isFileProtocol = window.location.protocol === 'file:';
 const isLocal = Boolean(
