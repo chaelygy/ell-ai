@@ -5,7 +5,7 @@
  * =====================================================================
  */
 
-const CLOUD_BACKEND_URL = 'https://london-fellowship-intimate-alt.trycloudflare.com';
+const CLOUD_BACKEND_URL = 'https://wrapping-games-exit-imagination.trycloudflare.com';
 
 const isFileProtocol = window.location.protocol === 'file:';
 const isLocal = Boolean(
